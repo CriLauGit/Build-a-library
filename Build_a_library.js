@@ -94,6 +94,38 @@ class CD extends Media {
   }
 }
 
+class Catalog {
+  constructor(type) {
+    this._type = type;
+    this._content = [];
+  } 
+  
+  get type() {
+    return this._type;
+  }
+  get content() {
+    return this._content;
+  }
+  
+  addContent (media) {
+    this.content.push(media);
+  }
+  
+  shuffleSongs() {
+    const tempSongs = [];
+    for(let i=0; i<this._content.length; i++) {
+      tempSongs.push(this._content[i].songs);
+    }
+    const songsList = tempSongs.reduce((a, c) => a.concat(c), []);
+    const shuffled = [];
+    let n = songsList.length;
+    for(let i=0; i <n; i++) {
+      shuffled.push(songsList.splice(Math.floor(Math.random()*songsList.length),1)[0]);
+    }
+    return shuffled;
+  }
+}
+
 const historyOfEverything = new Book('Bill Bryson', 'A Short History of Nearly Everything', 544)
 console.log(historyOfEverything.isCheckedOut);
 historyOfEverything.toggleCheckOutStatus();
@@ -110,6 +142,12 @@ speed.addRating(1);
 speed.addRating('a');
 console.log(speed.getAverageRating());
 const firstCD = new CD('Artist1', 'Title 1', ['Song1 1', 'Song1 2', 'Song1 3', 'Song1 5', 'Song1 4']);
-const secondCd = new CD('Artist2', 'Title 2', ['Song2 1', 'Song2 2']);
+const secondCD = new CD('Artist2', 'Title 2', ['Song2 1', 'Song2 2']);
 const thirdCD = new CD('Artist3', 'Title 3', ['Song3 1', 'Song3 2']);
 console.log(firstCD.shuffle());
+const CDs = new Catalog('CDs');
+CDs.addContent(secondCD);
+CDs.addContent(firstCD);
+CDs.addContent(thirdCD);
+console.log(CDs.content[0].songs);
+console.log(CDs.shuffleSongs());
