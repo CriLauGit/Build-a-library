@@ -15,7 +15,7 @@ class Media {
   
   set isCheckedOut(value) {
     if (typeof(value)==='boolean') {
-      return this._isCheckedout=value;
+      this._isCheckedOut = value;
     }
     else {
       console.log("The value must be either true or false")
@@ -27,21 +27,16 @@ class Media {
   }
   
   getAverageRating() {
-    return this._ratings.reduce((a,c) => a+c/this._ratings.length, 0)
+    return this.ratings.reduce((a,c) => a+c/this.ratings.length, 0)
   }
   
   toggleCheckOutStatus() {
-    if(this._isCheckedOut === true) {
-      return this._isCheckedOut = false;
-    }
-    else {
-      return this._isCheckedOut = true;
-    }
+    this.isCheckedOut = !this.isCheckedOut;
   }
   
   addRating (rating) {
     if(rating>=1 && rating <=5 && typeof(rating) === 'number') {
-      this._ratings.push(rating);
+      this.ratings.push(rating);
     }
     else {
       console.log("The rating must be a number between 1 and 5.")
